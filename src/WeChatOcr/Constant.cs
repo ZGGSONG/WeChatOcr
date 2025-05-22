@@ -1,15 +1,15 @@
 ﻿namespace WeChatOcr;
 
-public class Constant
+public static class Constant
 {
     /// <summary>
-    ///     内部OCR数据目录
+    ///     内部OCR数据目录（绝对路径）
     /// </summary>
-    public const string WeChatOcrData = ".\\wco_data";
+    public static readonly string WeChatOcrData = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "wco_data");
 
 #if WIN32
-    public const string MojoDllName = $"{Constant.WeChatOcrData}\\mmmojo.dll";
+    public static readonly string MojoDllName = Path.Combine(WeChatOcrData, "mmmojo.dll");
 #else
-    public const string MojoDllName = $"{Constant.WeChatOcrData}\\mmmojo_64.dll";
+    public static readonly string MojoDllName = Path.Combine(WeChatOcrData, "mmmojo_64.dll");
 #endif
 }

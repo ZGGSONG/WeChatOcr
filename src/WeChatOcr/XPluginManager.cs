@@ -22,8 +22,11 @@ public class XPluginManager : IDisposable
         if (isMmmojoEnvInited) StopMmMojoEnv();
     }
 
-    public void SetExePath(string exePath = Constant.WeChatOcrData)
+    public void SetExePath(string exePath = "")
     {
+        if (string.IsNullOrWhiteSpace(exePath))
+            exePath = Constant.WeChatOcrData;
+
         const string ocrExeName = "WeChatOCR.exe";
         if (!exePath.EndsWith(ocrExeName) && Directory.Exists(exePath)) exePath = Path.Combine(exePath, ocrExeName);
         if (!File.Exists(exePath)) throw new Exception($"指定的 {ocrExeName} 路径不存在!");
@@ -58,6 +61,9 @@ public class XPluginManager : IDisposable
 
     public void InitMmMojoEnv()
     {
+        // 首次加载 mmmojo.dll，后续忽略
+        MmmojoDll.Load(Path.Combine(Constant.WeChatOcrData, Constant.MojoDllName));
+
         var exePath = Marshal.PtrToStringUni(intPtrOcrExePath);
         if (!File.Exists(exePath)) throw new Exception($"给定的 WeChatOcr.exe 路径错误 (m_exe_path): {exePath}");
         if (isMmmojoEnvInited && intPtrMmmojoEnv != IntPtr.Zero) return;

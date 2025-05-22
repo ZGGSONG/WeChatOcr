@@ -22,7 +22,7 @@ public class ImageOcr : IDisposable
 
     public void Dispose()
     {
-        _ocrManager.KillWeChatOcr();
+        _ocrManager.Dispose();
     }
 
     public void Run(string imagePath, Action<string, WeChatOcrResult?>? callback)

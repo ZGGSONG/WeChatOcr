@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.IO;
 using System.Runtime.InteropServices;
 using Google.Protobuf;
 using OcrProtobuf;
@@ -45,8 +44,11 @@ public class OcrManager : XPluginManager, IDisposable
         }
     }
 
-    public void SetUsrLibDir(string usrLibDir = Constant.WeChatOcrData)
+    public void SetUsrLibDir(string usrLibDir = "")
     {
+        if (string.IsNullOrWhiteSpace(usrLibDir))
+            usrLibDir = Constant.WeChatOcrData;
+
         AppendSwitchNativeCmdLine("user-lib-dir", usrLibDir);
     }
 
